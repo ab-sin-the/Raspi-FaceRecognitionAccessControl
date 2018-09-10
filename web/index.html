@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<title>Face Recognition Access Control</title>
+<link href="css/style.css" rel="stylesheet">
+<script src="js/vue.min.js"></script>
+<script src="js/vue-resource.min.js"></script>
+</head>
+<body>
+<div class="allowBox" id="allowBox" v-cloak>
+
+  <div class="splitline"></div>
+  <div style="padding: 13px 0px 25px 10px;">
+      <div style="padding: 2px 0px 0px 50px">Name</div>
+      <div class="createButton" v-on:click="addNewStep1()">Add</div>
+  </div>
+
+  <div style="padding: 7px 0px 0px 15px;" is="toDelName" v-for="(name, item) in allowedName"  v-bind:Name="name" v-on:remove="deleteName(item)"></div>
+  <div class="inpt_box" v-show="isAdding">
+      <input type="text" spellcheck="false"  v-model="newName" placeholder="Name of New Person"><button v-on:click="addNewStep2()">Add</button>
+  </div>
+
+  <div class="functionConnect" v-show="!functionAppNameSet">
+    <input type="text" spellcheck="false" v-model="functionAppName" placeholder="Function App Name"><button v-on:click="connectApp()">Connect</button>
+  </div>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

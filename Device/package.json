@@ -1,0 +1,14 @@
+{
+  "name": "iot-workbench-raspi",
+  "version": "0.1.0",
+  "main": "app.js",
+  "dependencies": {
+    "onoff": "3.2.1",
+    "pi-camera": "1.1.0",
+    "request": "2.88.0",
+    "async": "2.6.1",
+    "path": "0.12.7",
+    "azure-iot-device": "^1.7.1",
+    "azure-iot-device-mqtt": "^1.7.1"
+  }
+}
