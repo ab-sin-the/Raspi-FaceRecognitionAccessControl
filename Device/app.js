@@ -537,7 +537,15 @@ var init = function(groupid, groupname){
         pushButton.unexport();
     }
        
-
+    if (!fs.existsSync('./identify')){
+        fs.mkdirSync('./identify');
+    }
+    if (!fs.existsSync('./Data')){
+        fs.mkdirSync('./Data');
+    }
+    if (!fs.existsSync('./Data/PersonGroup')){
+        fs.mkdirSync('./Data/PersonGroup');
+    }
     process.on('SIGINT', unexportOnClose);
     return new Promise((resolve, reject) => {
         detectGroup(groupid)
