@@ -27,7 +27,6 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
     string name = req.GetQueryNameValuePairs()
         .FirstOrDefault(q => string.Compare(q.Key, "name", true) == 0)
         .Value;
-    log.Verbose(action);
     if (action == "add")
     {
         var methodInvocation = new CloudToDeviceMethod("Add") { ResponseTimeout = TimeSpan.FromSeconds(30) };
@@ -45,6 +44,22 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
         var methodResponse = await serviceClient.InvokeDeviceMethodAsync(deviceName, methodInvocation);
         log.Verbose(methodResponse.ToString());
         response = new HttpResponseMessage(HttpStatusCode.OK);
+    }
+    else if (action == "list")
+    {   
+        string callback = req.GetQueryNameValuePairs()
+            .FirstOrDefault(q => string.Compare(q.Key, "callback", true) == 0)
+            .Value;
+
+        if (String.IsNullOrEmpty(callback))
+        {
+            callback = "callback";
+        }
+        var methodInvocation = new CloudToDeviceMethod("List") { ResponseTimeout = TimeSpan.FromSeconds(30) };
+        var methodResponse = await serviceClient.InvokeDeviceMethodAsync(deviceName, methodInvocation);
+        var names = methodResponse.GetPayloadAsJson();
+        response = new HttpResponseMessage(HttpStatusCode.OK);
+        response.Content = new StringContent(callback + "(" + names + ");", System.Text.Encoding.UTF8, "application/javascript");
     }
     else
     {
