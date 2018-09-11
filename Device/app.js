@@ -23,12 +23,10 @@ const camera = new PiCamera(
     }
 )
 
-const subscriptionKey = 'eac4c6e7da0e4a5fbae93f6b1e28a993';
-
-const uri = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/';
-
-const groupid = 'test001_id';
-const groupname = 'test001_name';
+const subscriptionKey = '';
+const uri = '';
+const groupid = '';
+const groupname = '';
 
 
 var IfAddingPerson = 0;
@@ -457,6 +455,20 @@ var loop = async function(groupid){
                 console.log(`Delete person ${Deletename}`);
                 deletePerson(Deletename, groupid);
                 response.send(200, "Delete person successfully", function (err) {
+                    if (err) {
+                        console.error('Unable to send method response: ' + err.toString());
+                    } else {
+                        console.log('response to method sent.');
+                    }
+                });
+            })
+            client.onDeviceMethod('List', function(request, response) {
+                responseStr = "";
+                var personList = require('./personList.json');
+                personList.forEach((person) => {
+                    responseStr = responseStr + " " + person.name;
+                });
+                response.send(200, responseStr, function (err) {
                     if (err) {
                         console.error('Unable to send method response: ' + err.toString());
                     } else {
