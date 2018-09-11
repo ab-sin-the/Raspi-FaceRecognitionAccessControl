@@ -48,6 +48,13 @@ function init() {
             },
             connectApp(){
                 this.functionAppNameSet = true;
+                var url = `https://${this.functionAppName}.azurewebsites.net/api/raspberrypi-state?action=list`;
+                this.$http.jsonp(url).then(data => {
+                    if (data.body){
+                        return;
+                    }
+                    this.allowedName = data.body.substring(2, data.body.length - 1).replace("\"", "").split(" ");
+                })
             }
         }
     });
