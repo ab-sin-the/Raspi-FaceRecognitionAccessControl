@@ -7,11 +7,6 @@
             "dependencies": [],
             "type": "IoTHub",
             "componentInfo": {
-                "values": {
-                    "iotHubConnectionString": "HostName=t-yiwche-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Lb0WgX4B+mEoxNA+oKPcsuYlTaG7Qdv9KIk5P7rcHXU=",
-                    "eventHubConnectionString": "Endpoint=sb://iothub-ns-t-yiwche-i-744819-4565159a2e.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=Lb0WgX4B+mEoxNA+oKPcsuYlTaG7Qdv9KIk5P7rcHXU=",
-                    "eventHubConnectionPath": "t-yiwche-iothub"
-                }
             }
         },
         {
