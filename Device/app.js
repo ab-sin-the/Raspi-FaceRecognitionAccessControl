@@ -25,8 +25,8 @@ const camera = new PiCamera(
     }
 )
 
-const subscriptionKey = '';
-const uri = '';
+const subscriptionKey = ''; //face service key
+const endpoint = ''; //face service endpoint
 const groupid = '';
 const groupname = '';
 
@@ -69,7 +69,7 @@ var personName2Id = function(personName){
 
 var createGroup =  function(groupid, groupname){
     const options_create = {
-        uri: uri + 'persongroups/' + groupid,
+        uri: endpoint + '/persongroups/' + groupid,
         body: '{"name": ' + '"' + groupname + '"}',
         headers: {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ var createGroup =  function(groupid, groupname){
 
 var createPerson =  function(personName, groupid){  
     const options_create_person = {
-        uri: uri + 'persongroups/' + groupid + "/persons",
+        uri: endpoint + '/persongroups/' + groupid + "/persons",
         body: '{"name": ' + '"' + personName + '"}',
         headers: {
             'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ var createPerson =  function(personName, groupid){
 
 var listPersonalGroup =  function (groupid){
     const options_list = {
-        uri: uri + 'persongroups/' + groupid + "/persons",
+        uri: endpoint + '/persongroups/' + groupid + "/persons",
         headers: {
             'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
@@ -151,7 +151,7 @@ var addFacesDir = function(groupid, personId, Dir){
                 else{
                     console.log(filename);
                     options_list_face_add = {
-                        uri: uri + 'persongroups/' + groupid + '/persons/' + personId + '/persistedFaces',
+                        uri: endpoint + '/persongroups/' + groupid + '/persons/' + personId + '/persistedFaces',
                         body: data,
                         headers: {
                             'Content-Type': 'application/octet-stream',
@@ -184,7 +184,7 @@ var addFacesDir = function(groupid, personId, Dir){
 var train = function(groupid){
     var trained = 0;
     const options_train = {
-        uri: uri + 'persongroups/' + groupid + '/train',
+        uri: endpoint + '/persongroups/' + groupid + '/train',
         headers: {
             'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
@@ -199,7 +199,7 @@ var train = function(groupid){
             var status = null;
             var checking = setInterval(() => {
                 const options_training = {
-                    uri: uri + 'persongroups/' + groupid + '/training',
+                    uri: endpoint + '/persongroups/' + groupid + '/training',
                     headers: {
                         'Ocp-Apim-Subscription-Key' : subscriptionKey
                     }
@@ -243,7 +243,7 @@ var identifyImage = function(imageLocalPath, groupid){
             }
             else{
                 var options_list_detect = {
-                    uri: uri + 'detect',
+                    uri: endpoint + '/detect',
                     body: data,
                     headers: {
                         'Content-Type': 'application/octet-stream',
@@ -259,7 +259,7 @@ var identifyImage = function(imageLocalPath, groupid){
                         if (JSON.parse(body)[0] !== undefined){
                             var faceId = JSON.parse(body)[0].faceId;
                             var options_list_identify = {
-                                uri: uri + 'identify',
+                                uri: endpoint + '/identify',
                                 body: '{"personGroupId": ' + '"' + groupid + '",' + 
                                 '"faceIds": [' + '"' + faceId + '"' + '],' + 
                                 '"maxNumOfCandidatesReturned": 1,' +
@@ -315,7 +315,7 @@ var identifyImage = function(imageLocalPath, groupid){
 var deletePerson = function(personName, groupid){
     var personId = personName2Id(personName);
     const options_delete_person = {
-        uri: uri + 'persongroups/' + groupid + "/persons/" + personId,
+        uri: endpoint + '/persongroups/' + groupid + "/persons/" + personId,
         headers: {
             'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
@@ -332,7 +332,7 @@ var deletePerson = function(personName, groupid){
 
 var deleteGroup = function(groupid){
     const options_delete_group = {
-        uri: uri + 'persongroups/' + groupid,
+        uri: endpoint + '/persongroups/' + groupid,
         headers: {
             'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
@@ -519,7 +519,7 @@ var loop = async function(groupid){
 
 var detectGroup = function(groupid){
     const options_detect_group = {
-        uri: uri + 'persongroups/' + groupid,
+        uri: endpoint + '/persongroups/' + groupid,
         headers: {
             'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
