@@ -11,7 +11,9 @@ const Mqtt = require('azure-iot-device-mqtt').Mqtt;
 const client = DeviceClient.fromConnectionString(connectionString, Mqtt);
 
 
-var pushButton = new Gpio(17, 'in', 'both');
+var pushButton = new Gpio(14, 'in', 'both');
+const LEDRed = new Gpio(5, 'out');
+const LEDGreen = new Gpio(6, 'out');
 var count = 1;
 const camera = new PiCamera(
     {
@@ -277,11 +279,15 @@ var identifyImage = function(imageLocalPath, groupid){
                                 else{
                                     if (JSON.parse(body)[0].candidates[0] === undefined){
                                         console.log('Not allowed!');
+                                        LEDRed.writeSync(1);
+                                        setTimeout(() => LEDRed.writeSync(0), 2000);
                                         IfIdentifying = 0;
                                         //denyEntry();
                                     }else{
                                         personId = JSON.parse(body)[0].candidates[0].personId;
                                         console.log(`Find Person ${personId2Name(personId)}`)
+                                        LEDGreen.writeSync(1);
+                                        setTimeout(() => LEDGreen.writeSync(0), 2000);
                                         IfIdentifying = 0;
                                         //allowEntry(personId2Name(personId));
                                     }
@@ -290,6 +296,9 @@ var identifyImage = function(imageLocalPath, groupid){
                         }
                         else{
                             console.log('Not allowed!');
+                            LEDRed.writeSync(1);
+                            setTimeout(() => LEDRed.writeSync(0), 2000);
+                            //denyEntry();
                             IfIdentifying = 0;
                         }
 
